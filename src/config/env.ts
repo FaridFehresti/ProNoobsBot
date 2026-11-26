@@ -14,14 +14,31 @@ function optionalSnowflakes(name: string): string[] {
   return values;
 }
 
+function optionalSnowflake(name: string): string | undefined {
+  const value = process.env[name]?.trim();
+  if (!value) return undefined;
+  if (!/^\d{17,20}$/.test(value)) throw new Error(`${name} must be a Discord snowflake ID.`);
+  return value;
+}
+
 const apiUrl = required('PRONOOBS_API_URL').replace(/\/+$/, '');
 if (!/^https?:\/\//.test(apiUrl)) throw new Error('PRONOOBS_API_URL must be an http(s) URL.');
 
 export const config = {
   botToken: required('DISCORD_BOT_TOKEN'),
   applicationId: required('DISCORD_APPLICATION_ID'),
-  guildId: process.env.DISCORD_GUILD_ID?.trim() || undefined,
+  guildId: optionalSnowflake('DISCORD_GUILD_ID'),
   apiUrl,
   apiKey: required('PRONOOBS_API_KEY'),
   adminRoleIds: optionalSnowflakes('DISCORD_ADMIN_ROLE_IDS'),
+  broadcastChannelIds: optionalSnowflakes('DISCORD_BROADCAST_CHANNEL_IDS'),
+  broadcastRoleIds: optionalSnowflakes('DISCORD_BROADCAST_ROLE_IDS'),
+  broadcastUserIds: optionalSnowflakes('DISCORD_BROADCAST_USER_IDS'),
+  registrationAnnouncementChannelId: optionalSnowflake('DISCORD_REGISTRATION_ANNOUNCEMENT_CHANNEL_ID'),
+  teamCategoryId: optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
+  teamTextCategoryId: optionalSnowflake('DISCORD_TEAM_TEXT_CATEGORY_ID') ?? optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
+  teamVoiceCategoryId: optionalSnowflake('DISCORD_TEAM_VOICE_CATEGORY_ID') ?? optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
+  teamCaptainRoleId: optionalSnowflake('DISCORD_TEAM_CAPTAIN_ROLE_ID'),
+  mmrAlertChannelId: optionalSnowflake('DISCORD_MMR_ALERT_CHANNEL_ID'),
+  auditLogChannelId: optionalSnowflake('DISCORD_AUDIT_LOG_CHANNEL_ID'),
 };

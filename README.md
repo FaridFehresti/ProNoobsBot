@@ -23,6 +23,7 @@ Fill in `.env`:
 - `PRONOOBS_API_URL` is the API origin (for example, `https://api.example.com`), with no `/api` suffix.
 - `PRONOOBS_API_KEY` must match the backend's `ADMIN_API_KEY`.
 - `DISCORD_ADMIN_ROLE_IDS` is an optional comma-separated list of role IDs allowed to run write commands. Discord server administrators are always allowed. If no role IDs are configured, only server administrators can write.
+- Channel/category/role IDs for planned registration and broadcast workflows are listed in [`docs/DISCORD_SETUP_CHECKLIST.md`](docs/DISCORD_SETUP_CHECKLIST.md). They are optional until those workflows are enabled.
 
 Register slash commands, then run the bot:
 
@@ -57,3 +58,5 @@ Write commands check the caller's administrator permission or an allowed admin r
 - `src/api/` contains the backend client and API response types.
 - `src/config/` validates configuration at startup.
 - `src/deploy-commands.ts` registers commands independently of the running gateway client.
+
+The bot maintains the Discord Gateway connection and calls the API over HTTP. Keep the bot running as a supervised service so it reconnects after restarts. The API does not hold the Discord bot token; when the website admin panel needs to trigger Discord actions, the API and bot will need a durable job/outbox flow for the bot to consume.

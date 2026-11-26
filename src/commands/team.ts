@@ -18,6 +18,10 @@ const data = new SlashCommandBuilder()
       subcommand
         .addStringOption((option) => option.setName(`member${member}_name`).setDescription(`Member ${member} Steam/Dota name`).setRequired(true).setMaxLength(120))
         .addIntegerOption((option) => option.setName(`member${member}_mmr`).setDescription(`Member ${member} MMR`).setRequired(true).setMinValue(0).setMaxValue(100_000));
+      if (member > 1) {
+        subcommand.addUserOption((option) => option.setName(`member${member}_discord_user`)
+          .setDescription(`Member ${member} Discord account, if they are in the server`));
+      }
     }
     subcommand.addBooleanOption((option) => option.setName('accept_captain_agreement')
       .setDescription('Accept captain responsibility, fair play and MMR rules, and organizer communication')
@@ -70,7 +74,15 @@ export const teamCommand: BotCommand = {
         await interaction.editReply({ content: 'Fill team member slots in order, starting at member 1.' });
         return;
       }
-      members.push({ displayName, mmr, ...(index === 1 ? { discordId: interaction.user.id, isCaptain: true } : {}) });
+      const discordId = index === 1
+        ? interaction.user.id
+        : interaction.options.getUser(`member${index}_discord_user`)?.id;
+      members.push({
+        displayName,
+        mmr,
+        ...(discordId ? { discordId } : {}),
+        ...(index === 1 ? { isCaptain: true } : {}),
+      });
     }
 
     const team = await pronoobsApi.createTeam({
