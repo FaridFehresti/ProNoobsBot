@@ -23,6 +23,7 @@ Fill in `.env`:
 - `PRONOOBS_API_URL` is the API origin (for example, `https://api.example.com`), with no `/api` suffix.
 - `PRONOOBS_API_KEY` must match the backend's `ADMIN_API_KEY`.
 - `DISCORD_ADMIN_ROLE_IDS` is an optional comma-separated list of role IDs allowed to run write commands. Discord server administrators are always allowed. If no role IDs are configured, only server administrators can write.
+- The provided guild, application, admin role, announcement channel, registration channel, and team category IDs are prefilled in `.env.example`. Successful-registration notices currently target the announcement channel. The MMR alert channel and captain role remain unset.
 - Channel/category/role IDs for planned registration and broadcast workflows are listed in [`docs/DISCORD_SETUP_CHECKLIST.md`](docs/DISCORD_SETUP_CHECKLIST.md). They are optional until those workflows are enabled.
 
 Register slash commands, then run the bot:

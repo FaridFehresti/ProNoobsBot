@@ -4,25 +4,27 @@ Gather these values before enabling automatic registration, role/channel provisi
 
 ## Discord application and access
 
-- [ ] Discord Application ID — `DISCORD_APPLICATION_ID` (already required).
+- [x] Discord Application ID — `DISCORD_APPLICATION_ID` = `1575472988059607050`.
 - [ ] Bot token — `DISCORD_BOT_TOKEN` (already required; keep secret).
-- [ ] Discord server (guild) ID — `DISCORD_GUILD_ID` (already optional).
+- [x] Discord server (guild) ID — `DISCORD_GUILD_ID` = `830477450336665670`.
 - [ ] Bot invited with the `bot` and `applications.commands` OAuth scopes.
 - [ ] Bot has `Manage Roles`, `Manage Channels`, `View Channels`, `Send Messages`, `Read Message History`, and `Embed Links` in the ProNoobs server.
 - [ ] Move the bot's highest role above the team roles and captain role it must create or assign.
-- [ ] Admin role IDs allowed to create teams, broadcast, and change tournament settings — `DISCORD_ADMIN_ROLE_IDS`.
+- [x] Admin role IDs allowed to create teams, broadcast, and change tournament settings — `DISCORD_ADMIN_ROLE_IDS` = `1187076129698365490`.
 
 ## Channel and role IDs
 
-- [ ] Registration announcement text channel — `DISCORD_REGISTRATION_ANNOUNCEMENT_CHANNEL_ID`.
-- [ ] Category for each team's private text and voice channels — `DISCORD_TEAM_CATEGORY_ID`.
-- [ ] Global team-captain role to assign to the person who registers — `DISCORD_TEAM_CAPTAIN_ROLE_ID`.
-- [ ] MMR-over-cap alert channel — `DISCORD_MMR_ALERT_CHANNEL_ID`.
+- [x] General announcement channel — `DISCORD_ANNOUNCEMENT_CHANNEL_ID` = `1540396583265239141`.
+- [x] Registration/sign-up channel — `DISCORD_REGISTRATION_CHANNEL_ID` = `1540396648750911609`.
+- [x] Registration notices currently use the general announcement channel — `DISCORD_REGISTRATION_ANNOUNCEMENT_CHANNEL_ID` = `1540396583265239141`.
+- [x] Team text and voice channels share the provided team communication category — `DISCORD_TEAM_CATEGORY_ID` = `1574003539997499523`.
+- [ ] Create a global role named `Team Captain` and set its ID as `DISCORD_TEAM_CAPTAIN_ROLE_ID`. It does not need special permissions; keep it below the bot's highest role.
+- [x] MMR-over-cap alert channel is not needed yet — leave `DISCORD_MMR_ALERT_CHANNEL_ID` blank.
 - [ ] Admin action/audit log channel — `DISCORD_AUDIT_LOG_CHANNEL_ID`.
-- [ ] Optional channel allowlist for broadcasts — `DISCORD_BROADCAST_CHANNEL_IDS` (comma-separated).
+- [x] Broadcasts may target any channel the bot can access — leave `DISCORD_BROADCAST_CHANNEL_IDS` blank.
 - [ ] Optional role allowlist for broadcasts — `DISCORD_BROADCAST_ROLE_IDS` (comma-separated).
 - [ ] Optional user allowlist for broadcasts — `DISCORD_BROADCAST_USER_IDS` (comma-separated).
-- [ ] One team category ID, or separate text/voice category IDs — `DISCORD_TEAM_CATEGORY_ID`, `DISCORD_TEAM_TEXT_CATEGORY_ID`, `DISCORD_TEAM_VOICE_CATEGORY_ID`.
+- [x] One category is used for team text and voice channels; separate IDs can override it later.
 - [ ] Confirm channel permissions: team members can view/connect; server admins can view/manage; everyone else is denied.
 - [ ] Confirm whether existing channels/roles with the same team name should be reused, reconciled, or reported for manual review.
 
@@ -47,6 +49,7 @@ Gather these values before enabling automatic registration, role/channel provisi
 - [ ] List roles and channels admins may target, or confirm that admins may choose any role/channel in the server.
 - [ ] Confirm who can broadcast (reuse the admin role IDs or provide a separate role list).
 - [ ] Confirm whether broadcasts may mention users/roles and which roles are mentionable.
+- [ ] Blank broadcast role/user allowlists mean admins can target any role or user; add IDs only if you want to restrict those targets.
 - [ ] Confirm whether a user-targeted announcement should be sent by DM or posted in a channel. DMs can be blocked by a member's privacy settings.
 - [ ] Decide whether to give the bot permission to mention all roles or restrict it to roles explicitly marked mentionable.
 - [ ] Decide whether a preview and confirmation step is required before sending.

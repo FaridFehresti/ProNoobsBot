@@ -35,6 +35,8 @@ export const config = {
   broadcastRoleIds: optionalSnowflakes('DISCORD_BROADCAST_ROLE_IDS'),
   broadcastUserIds: optionalSnowflakes('DISCORD_BROADCAST_USER_IDS'),
   registrationAnnouncementChannelId: optionalSnowflake('DISCORD_REGISTRATION_ANNOUNCEMENT_CHANNEL_ID'),
+  announcementChannelId: optionalSnowflake('DISCORD_ANNOUNCEMENT_CHANNEL_ID'),
+  registrationChannelId: optionalSnowflake('DISCORD_REGISTRATION_CHANNEL_ID'),
   teamCategoryId: optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
   teamTextCategoryId: optionalSnowflake('DISCORD_TEAM_TEXT_CATEGORY_ID') ?? optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
   teamVoiceCategoryId: optionalSnowflake('DISCORD_TEAM_VOICE_CATEGORY_ID') ?? optionalSnowflake('DISCORD_TEAM_CATEGORY_ID'),
