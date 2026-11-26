@@ -4,7 +4,7 @@ TypeScript Discord bot for managing ProNoobs tournaments through the [ProNoobs A
 
 ## Requirements
 
-- Node.js 20 or later
+- Node.js 24.17.0 or later (required by the current discord.js release)
 - pnpm
 - A Discord application and bot token
 - A running ProNoobs API with an `ADMIN_API_KEY`
