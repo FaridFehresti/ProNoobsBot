@@ -15,7 +15,7 @@ export const registrationCommand: BotCommand = {
     .addSubcommand((subcommand) => subcommand.setName('status').setDescription('Update an entry status')
       .addStringOption((option) => option.setName('registration_id').setDescription('Registration ID').setRequired(true))
       .addStringOption((option) => option.setName('status').setDescription('New status').setRequired(true)
-        .addChoices(...statuses.map((status) => ({ name: status, value: status })))),
+        .addChoices(...statuses.map((status) => ({ name: status, value: status }))))),
   adminOnly: true,
   async execute(interaction) {
     if (interaction.options.getSubcommand() === 'submit') {

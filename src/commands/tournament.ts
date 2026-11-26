@@ -21,7 +21,7 @@ export const tournamentCommand: BotCommand = {
     .addSubcommand((subcommand) => subcommand.setName('status').setDescription('Update tournament status')
       .addStringOption((option) => option.setName('id').setDescription('Tournament ID').setRequired(true))
       .addStringOption((option) => option.setName('status').setDescription('New status').setRequired(true)
-        .addChoices(...statuses.map((status) => ({ name: status.replaceAll('_', ' '), value: status })))),
+        .addChoices(...statuses.map((status) => ({ name: status.replaceAll('_', ' '), value: status }))))),
   adminOnly: ['create', 'status'],
   async execute(interaction) {
     const subcommand = interaction.options.getSubcommand();
