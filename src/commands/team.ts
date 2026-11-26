@@ -11,11 +11,13 @@ const data = new SlashCommandBuilder()
     subcommand.setName('create').setDescription('Create a team and roster')
       .addStringOption((option) => option.setName('name').setDescription('Team name').setRequired(true).setMaxLength(120));
     for (let member = 1; member <= 5; member += 1) {
-      const required = member === 1;
       subcommand
-        .addStringOption((option) => option.setName(`member${member}_name`).setDescription(`Member ${member} display name`).setRequired(required).setMaxLength(120))
-        .addIntegerOption((option) => option.setName(`member${member}_mmr`).setDescription(`Member ${member} MMR`).setRequired(required).setMinValue(0).setMaxValue(100_000));
+        .addStringOption((option) => option.setName(`member${member}_name`).setDescription(`Member ${member} Steam/Dota name`).setRequired(true).setMaxLength(120))
+        .addIntegerOption((option) => option.setName(`member${member}_mmr`).setDescription(`Member ${member} MMR`).setRequired(true).setMinValue(0).setMaxValue(100_000));
     }
+    subcommand.addBooleanOption((option) => option.setName('accept_captain_agreement')
+      .setDescription('Accept captain responsibility, fair play and MMR rules, and organizer communication')
+      .setRequired(true));
     return subcommand;
   });
 
@@ -26,6 +28,11 @@ export const teamCommand: BotCommand = {
     if (interaction.options.getSubcommand() === 'list') {
       const teams = await pronoobsApi.listTeams();
       await interaction.editReply({ content: teams.length ? truncate(teams.map(formatTeam).join('\n')) : 'No teams registered yet.' });
+      return;
+    }
+
+    if (!interaction.options.getBoolean('accept_captain_agreement', true)) {
+      await interaction.editReply({ content: 'The team cannot be created unless the captain agreement is accepted.' });
       return;
     }
 
@@ -45,7 +52,12 @@ export const teamCommand: BotCommand = {
       members.push({ displayName, mmr, ...(index === 1 ? { discordId: interaction.user.id, isCaptain: true } : {}) });
     }
 
-    const team = await pronoobsApi.createTeam({ name: interaction.options.getString('name', true), members });
+    const team = await pronoobsApi.createTeam({
+      name: interaction.options.getString('name', true),
+      captainDiscordName: interaction.user.globalName ?? interaction.user.username,
+      captainAgreementAccepted: true,
+      members,
+    });
     await interaction.editReply({ content: `Team created: ${formatTeam(team)}` });
   },
 };

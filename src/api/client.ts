@@ -66,12 +66,17 @@ export class PronoobsApi {
     return this.request('/teams');
   }
 
-  createTeam(input: { name: string; members: Array<{
+  createTeam(input: {
+    name: string;
+    captainDiscordName: string;
+    captainAgreementAccepted: true;
+    members: Array<{
     displayName: string;
     mmr: number;
     discordId?: string;
     isCaptain?: boolean;
-  }> }): Promise<Team> {
+    }>;
+  }): Promise<Team> {
     return this.request('/teams', { method: 'POST', body: JSON.stringify(input) }, true);
   }
 

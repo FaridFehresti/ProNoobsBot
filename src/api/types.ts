@@ -14,8 +14,6 @@ export interface Tournament {
 export interface Player {
   id: number | string;
   displayName: string;
-  discordId: string | null;
-  steamId: string | null;
   mmr: number;
   position: string | null;
   isCaptain: boolean;
@@ -24,6 +22,8 @@ export interface Player {
 export interface Team {
   id: number | string;
   name: string;
+  captainDiscordName: string | null;
+  captainAgreementAccepted: boolean;
   members: Player[];
 }
 

@@ -8,7 +8,7 @@ export function formatTournament(tournament: Tournament): string {
 
 export function formatTeam(team: Team): string {
   const members = team.members.map((member) => `${member.displayName} (${member.mmr} MMR)${member.isCaptain ? ' · captain' : ''}`).join(', ');
-  return `**${team.name}** (#${team.id}) — ${members || 'No roster'}`;
+  return `**${team.name}** (#${team.id}) — Captain: ${team.captainDiscordName ?? 'unknown'} — ${members || 'No roster'}`;
 }
 
 export function truncate(content: string, limit = 1_900): string {
