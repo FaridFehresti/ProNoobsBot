@@ -12,7 +12,7 @@ export class PronoobsApi {
   private async request<T>(path: string, init: RequestInit = {}, authenticated = false): Promise<T> {
     const headers = new Headers(init.headers);
     headers.set('Accept', 'application/json');
-    if (init.body) headers.set('Content-Type', 'application/json');
+    if (init.body && !(init.body instanceof FormData)) headers.set('Content-Type', 'application/json');
     if (authenticated) headers.set('X-API-Key', config.apiKey);
 
     let response: Response;
@@ -85,6 +85,12 @@ export class PronoobsApi {
       method: 'POST',
       body: JSON.stringify({ teamId }),
     }, true);
+  }
+
+  uploadTeamLogo(teamId: string, image: Blob, filename: string): Promise<{ id: number | string; logoUrl: string }> {
+    const form = new FormData();
+    form.append('logo', image, filename);
+    return this.request(`/teams/${encodeURIComponent(teamId)}/logo`, { method: 'PUT', body: form }, true);
   }
 
   updateRegistration(id: string, status: RegistrationStatus): Promise<Registration> {

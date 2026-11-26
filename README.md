@@ -44,7 +44,7 @@ Invite the bot with the `bot` and `applications.commands` OAuth scopes. No messa
 
 - `/tournament list` and `/tournament show` — view tournament details.
 - `/tournament create` and `/tournament status` — create tournaments and update status, including opening registration (admin only).
-- `/team list` and `/team create` — inspect teams or create a five-player roster with MMR. The command user is saved as captain, and creation requires agreeing to the captain responsibilities; creation is admin only.
+- `/team list`, `/team create`, and `/team logo` — inspect teams, create a five-player roster with MMR and captain agreement, or upload/replace a PNG, JPEG, or WebP logo (maximum 5 MB). Team writes are admin only.
 - `/registration submit` and `/registration status` — submit a team to an open tournament and update entry status.
 - `/player mmr` — update a player's MMR.
 

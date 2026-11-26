@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { pronoobsApi } from '../api/client.js';
+import { config } from '../config/env.js';
 import { formatTeam, truncate } from './format.js';
 import type { BotCommand } from './types.js';
 
@@ -7,6 +8,9 @@ const data = new SlashCommandBuilder()
   .setName('team')
   .setDescription('View and register ProNoobs teams')
   .addSubcommand((subcommand) => subcommand.setName('list').setDescription('List teams and rosters'))
+  .addSubcommand((subcommand) => subcommand.setName('logo').setDescription('Upload or replace a team logo')
+    .addStringOption((option) => option.setName('team_id').setDescription('Team ID').setRequired(true))
+    .addAttachmentOption((option) => option.setName('image').setDescription('PNG, JPEG, or WebP image (max 5 MB)').setRequired(true)))
   .addSubcommand((subcommand) => {
     subcommand.setName('create').setDescription('Create a team and roster')
       .addStringOption((option) => option.setName('name').setDescription('Team name').setRequired(true).setMaxLength(120));
@@ -23,11 +27,28 @@ const data = new SlashCommandBuilder()
 
 export const teamCommand: BotCommand = {
   data,
-  adminOnly: ['create'],
+  adminOnly: ['create', 'logo'],
   async execute(interaction) {
     if (interaction.options.getSubcommand() === 'list') {
       const teams = await pronoobsApi.listTeams();
       await interaction.editReply({ content: teams.length ? truncate(teams.map(formatTeam).join('\n')) : 'No teams registered yet.' });
+      return;
+    }
+
+    if (interaction.options.getSubcommand() === 'logo') {
+      const attachment = interaction.options.getAttachment('image', true);
+      if (attachment.size > 5 * 1024 * 1024 ||
+          !['image/png', 'image/jpeg', 'image/webp'].includes(attachment.contentType ?? '')) {
+        await interaction.editReply({ content: 'Choose a PNG, JPEG, or WebP image no larger than 5 MB.' });
+        return;
+      }
+      const response = await fetch(attachment.url);
+      if (!response.ok) throw new Error('Could not download the Discord attachment.');
+      const image = await response.blob();
+      const result = await pronoobsApi.uploadTeamLogo(
+        interaction.options.getString('team_id', true), image, attachment.name,
+      );
+      await interaction.editReply({ content: `Logo uploaded for team #${result.id}: ${new URL(result.logoUrl, `${config.apiUrl}/`).toString()}` });
       return;
     }
 

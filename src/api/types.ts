@@ -24,6 +24,7 @@ export interface Team {
   name: string;
   captainDiscordName: string | null;
   captainAgreementAccepted: boolean;
+  logoUrl: string | null;
   members: Player[];
 }
 
