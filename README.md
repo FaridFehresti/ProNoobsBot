@@ -20,7 +20,7 @@ Fill in `.env`:
 
 - `DISCORD_BOT_TOKEN` and `DISCORD_APPLICATION_ID` come from the Discord Developer Portal.
 - `DISCORD_GUILD_ID` is optional. Set it to your server ID for fast guild command updates; leave blank for global registration.
-- `PRONOOBS_API_URL` is the API origin (for example, `https://api.example.com`), with no `/api` suffix.
+- `PRONOOBS_API_URL` is the website origin `https://pronoobs.com` (no `/api` suffix; the bot adds `/api` to requests).
 - `PRONOOBS_API_KEY` must match the backend's `ADMIN_API_KEY`.
 - `DISCORD_ADMIN_ROLE_IDS` is an optional comma-separated list of role IDs allowed to run write commands. Discord server administrators are always allowed. If no role IDs are configured, only server administrators can write.
 - The provided guild, application, admin role, announcement channel, registration channel, and team category IDs are prefilled in `.env.example`. Successful-registration notices currently target the announcement channel. The MMR alert channel and captain role remain unset.
